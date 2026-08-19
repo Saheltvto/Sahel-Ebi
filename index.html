@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>قطعات یدکی موتور سیکلت پالس - سیستم حسابداری</title>
+  <meta name="theme-color" content="#0a0e17">
+  <meta name="description" content="سیستم حسابداری قطعات یدکی موتور سیکلت پالس - مدیریت اسناد مالی، دفاتر معین و تفصیلی">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root{
+      --bg:#0a0e17;
+      --surface:rgba(255,255,255,0.03);
+      --surface-2:rgba(255,255,255,0.06);
+      --glass:rgba(255,255,255,0.05);
+      --glass-border:rgba(255,255,255,0.1);
+      --text:#f1f5f9;
+      --muted:#94a3b8;
+      --line:rgba(255,255,255,0.08);
+      --orange:#f97316;
+      --orange-glow:rgba(249,115,22,0.4);
+      --silver:#cbd5e1;
+      --blue:#3b82f6;
+      --blue-soft:rgba(59,130,246,0.15);
+      --green:#10b981;
+      --green-soft:rgba(16,185,129,0.15);
+      --red:#ef4444;
+      --red-soft:rgba(239,68,68,0.15);
+      --shadow:0 20px 60px rgba(0,0,0,0.5);
+      --radius:20px;
+      --radius-sm:12px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:'Vazirmatn',Tahoma,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      font-size:14px;
+      overflow-x:hidden;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(249,115,22,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(59,130,246,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.03) 0%, transparent 50%);
+      pointer-events:none;
+      z-index:0;
+      animation:bgShift 15s ease-in-out infinite;
+    }
+
+    @keyframes bgShift{
+      0%,100%{transform:scale(1) rotate(0deg)}
+      33%{transform:scale(1.1) rotate(1deg)}
+      66%{transform:scale(0.95) rotate(-1deg)}
+    }
+
+    body::after{
+      content:'';
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size:60px 60px;
+      pointer-events:none;
+      z-index:0;
+      animation:gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove{
+      from{background-position:0 0}
+      to{background-position:60px 60px}
+    }
+
+    .landing-container{
+      position:relative;
+      z-index:1;
+      max-width:900px;
+      width:100%;
+      padding:40px 20px;
+      text-align:center;
+    }
+
+    .hero{
+      background:var(--glass);
+      border:1px solid var(--glass-border);
+      border-radius:30px;
+      padding:60px 40px;
+      backdrop-filter:blur(20px);
+      box-shadow:var(--shadow);
+      animation:fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(30px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .hero-icon{
+      width:100px;
+      height:100px;
+      margin:0 auto 30px;
+      border-radius:30px;
+      display:grid;
+      place-items:center;
+      font-size:50px;
+      background:linear-gradient(135deg, var(--orange), #ea580c);
+      box-shadow:0 0 50px var(--orange-glow);
+      animation:pulse 2s ease-in-out infinite;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-icon::before{
+      content:'';
+      position:absolute;
+      inset:-50%;
+      background:linear-gradient(transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+      animation:shine 3s ease-in-out infinite;
+    }
+
+    @keyframes shine{
+      0%{transform:translateX(-100%) rotate(25deg)}
+      100%{transform:translateX(100%) rotate(25deg)}
+    }
+
+    @keyframes pulse{
+      0%,100%{box-shadow:0 0 50px var(--orange-glow)}
+      50%{box-shadow:0 0 80px var(--orange-glow)}
+    }
+
+    .hero h1{
+      font-size:36px;
+      font-weight:900;
+      margin:0 0 15px;
+      background:linear-gradient(135deg, #fff, var(--silver));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      letter-spacing:-1px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:15px;
+      line-height:2;
+      margin:0 0 35px;
+    }
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:15px;
+      margin-bottom:40px;
+    }
+
+    .feature-card{
+      background:var(--glass);
+      border:1px solid var(--glass-border);
+      border-radius:18px;
+      padding:20px;
+      transition:all .3s;
+      animation:cardFloat 3s ease-in-out infinite;
+    }
+
+    .feature-card:nth-child(2){animation-delay:.3s}
+    .feature-card:nth-child(3){animation-delay:.6s}
+
+    @keyframes cardFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-5px)}
+    }
+
+    .feature-card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(249,115,22,0.4);
+      box-shadow:0 15px 40px rgba(249,115,22,0.15);
+    }
+
+    .feature-icon{
+      font-size:30px;
+      margin-bottom:12px;
+    }
+
+    .feature-card h3{
+      font-size:14px;
+      margin:0 0 8px;
+      font-weight:800;
+    }
+
+    .feature-card p{
+      font-size:10px;
+      color:var(--muted);
+      margin:0;
+      line-height:1.8;
+    }
+
+    .btn{
+      display:inline-block;
+      background:linear-gradient(135deg, var(--orange), #ea580c);
+      color:#fff;
+      padding:15px 35px;
+      border-radius:14px;
+      text-decoration:none;
+      font-weight:800;
+      font-size:14px;
+      letter-spacing:.5px;
+      box-shadow:0 10px 30px var(--orange-glow);
+      transition:all .3s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .btn::before{
+      content:'';
+      position:absolute;
+      inset:-50%;
+      background:linear-gradient(transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+      animation:shine 2.5s ease-in-out infinite;
+    }
+
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 15px 40px var(--orange-glow);
+    }
+
+    .btn-secondary{
+      display:inline-block;
+      background:var(--glass);
+      color:var(--text);
+      border:1px solid var(--glass-border);
+      padding:15px 35px;
+      border-radius:14px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:13px;
+      margin-left:10px;
+      transition:all .3s;
+    }
+
+    .btn-secondary:hover{
+      background:var(--surface-2);
+      border-color:rgba(255,255,255,0.2);
+      transform:translateY(-3px);
+    }
+
+    .github-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:12px;
+      margin-top:30px;
+      transition:all .3s;
+    }
+
+    .github-link:hover{
+      color:#fff;
+    }
+
+    @media(max-width:768px){
+      .hero{
+        padding:40px 20px;
+        border-radius:22px;
+      }
+
+      .hero h1{
+        font-size:26px;
+      }
+
+      .hero p{
+        font-size:12px;
+      }
+
+      .hero-icon{
+        width:80px;
+        height:80px;
+        font-size:40px;
+        border-radius:22px;
+      }
+
+      .features{
+        grid-template-columns:1fr;
+      }
+
+      .feature-card{
+        padding:15px;
+      }
+
+      .btn,.btn-secondary{
+        display:block;
+        margin:0 0 10px;
+        text-align:center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-container">
+    <div class="hero">
+      <div class="hero-icon">🏍</div>
+      <h1>قطعات یدکی موتور سیکلت پالس</h1>
+      <p>
+        سیستم حسابداری پیشرفته و مدرن برای مدیریت قطعات یدکی موتورسیکلت
+        <br>
+        مدیریت اسناد مالی، دفاتر معین و تفصیلی با رابط کاربری زیبا و کاربرپسند
+      </p>
+      
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>داشبورد مالی</h3>
+          <p>نمای کلی از وضعیت مالی با نمودارها و آمار لحظه‌ای</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>مدیریت اسناد</h3>
+          <p>ثبت، ویرایش و جستجوی سریع اسناد مالی</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>دفاتر معین و تفصیلی</h3>
+          <p>مدیریت کامل حساب‌ها با مانده‌گیری خودکار</p>
+        </div>
+      </div>
+
+      <a href="https://script.google.com/" class="btn" target="_blank">🚀 شروع استفاده</a>
+      <a href="https://github.com/" class="btn-secondary" target="_blank">📦 مشاهده سورس کد</a>
+      
+      <br>
+      <a href="https://github.com/" class="github-link" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        مشاهده در گیت‌هاب
+      </a>
+    </div>
+  </div>
+</body>
+</html>
