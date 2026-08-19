@@ -2,57 +2,193 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>قطعات یدکی موتور سیکلت پالس</title>
   <meta name="theme-color" content="#0a0e17">
-  
-  <!-- ریدایرکت مستقیم به اپ -->
-  <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbwCv6I6FYXxfNasBqNbfJAGkgi7i4ILGeTijxxnbkOz1fs3k9_XRKqXlUOZ96bWD2Rf/exec">
-  
-  <script>
-    // ریدایرکت فوری با جاوااسکریپت
-    window.location.href = "https://script.google.com/macros/s/AKfycbwCv6I6FYXxfNasBqNbfJAGkgi7i4ILGeTijxxnbkOz1fs3k9_XRKqXlUOZ96bWD2Rf/exec";
-  </script>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
   
   <style>
-    body {
+    * {
       margin: 0;
-      min-height: 100vh;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0a0e17;
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+    }
+    
+    #appFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    
+    /* لودینگ */
+    #loading {
+      position: fixed;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      gap: 15px;
       background: #0a0e17;
-      font-family: 'Vazirmatn', Tahoma, sans-serif;
-      color: #f1f5f9;
+      z-index: 1000;
+      transition: opacity 0.3s ease;
     }
     
-    .loading {
-      text-align: center;
-      animation: pulse 1.5s ease-in-out infinite;
+    #loading.hidden {
+      opacity: 0;
+      pointer-events: none;
     }
     
     .loading-icon {
-      font-size: 50px;
-      margin-bottom: 20px;
-      display: block;
+      font-size: 60px;
+      animation: pulse 1.5s ease-in-out infinite;
     }
     
     .loading-text {
-      font-size: 14px;
       color: #94a3b8;
-      display: block;
+      font-size: 13px;
+      letter-spacing: 0.5px;
     }
     
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+    
+    /* پیام خطا */
+    #errorMessage {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+      background: #0a0e17;
+      color: #f1f5f9;
+      z-index: 1001;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    #errorMessage.show {
+      display: flex;
+    }
+    
+    .error-icon {
+      font-size: 50px;
+    }
+    
+    .error-text {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 2;
+    }
+    
+    .retry-btn {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: #fff;
+      border: none;
+      padding: 13px 30px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 5px 20px rgba(249, 115, 22, 0.4);
+      transition: all 0.3s;
+    }
+    
+    .retry-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(249, 115, 22, 0.5);
     }
   </style>
+  <link rel="manifest" href="/Sahel-Ebi/manifest.json">
 </head>
 <body>
-  <div class="loading">
-    <span class="loading-icon">🏍</span>
-    <span class="loading-text">در حال انتقال به برنامه...</span>
+  <!-- لودینگ -->
+  <div id="loading">
+    <div class="loading-icon">🏍</div>
+    <div class="loading-text">در حال بارگذاری برنامه...</div>
   </div>
+  
+  <!-- پیام خطا -->
+  <div id="errorMessage">
+    <div class="error-icon">⚠️</div>
+    <div class="error-text">
+      برنامه قابل نمایش نیست. ممکن است لینک Google Apps Script تغییر کرده باشد.
+    </div>
+    <button class="retry-btn" onclick="retryLoad()">تلاش مجدد</button>
+  </div>
+  
+  <!-- اپلیکیشن داخل iframe -->
+  <iframe 
+    id="appFrame" 
+    src="https://script.google.com/macros/s/AKfycbwCv6I6FYXxfNasBqNbfJAGkgi7i4ILGeTijxxnbkOz1fs3k9_XRKqXlUOZ96bWD2Rf/exec"
+    allow="fullscreen"
+    allowfullscreen="true"
+    webkitallowfullscreen="true"
+    mozallowfullscreen="true"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-storage-access-by-user-activation"
+  ></iframe>
+  
+  <script>
+    const APP_URL = "https://script.google.com/macros/s/AKfycbwCv6I6FYXxfNasBqNbfJAGkgi7i4ILGeTijxxnbkOz1fs3k9_XRKqXlUOZ96bWD2Rf/exec";
+    
+    const iframe = document.getElementById('appFrame');
+    const loading = document.getElementById('loading');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    // وقتی iframe لود شد، لودینگ رو مخفی کن
+    iframe.addEventListener('load', function() {
+      loading.classList.add('hidden');
+      errorMessage.classList.remove('show');
+    });
+    
+    // اگر خطا رخ داد
+    iframe.addEventListener('error', function() {
+      loading.classList.add('hidden');
+      errorMessage.classList.add('show');
+    });
+    
+    // تلاش مجدد
+    function retryLoad() {
+      errorMessage.classList.remove('show');
+      loading.classList.remove('hidden');
+      iframe.src = APP_URL;
+    }
+    
+    // اگر بعد از 10 ثانیه لود نشد
+    setTimeout(function() {
+      if (!loading.classList.contains('hidden')) {
+        loading.classList.add('hidden');
+        errorMessage.classList.add('show');
+      }
+    }, 10000);
+    
+    // ثبت سرویس ورکر برای PWA (برای اپ موبایل)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        // می‌تونید بعداً service worker اضافه کنید
+      });
+    }
+  </script>
 </body>
 </html>
