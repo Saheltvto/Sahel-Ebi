@@ -1,0 +1,34 @@
+{
+  "timeZone": "Asia/Tehran",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "webapp": {
+    "executeAs": "USER_DEPLOYING",
+    "access": "ANYONE_ANONYMOUS"
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "addOns": {
+    "common": {
+      "name": "قطعات یدکی موتور سیکلت پالس",
+      "logoUrl": "https://www.gstatic.com/images/icons/material/system/1x/directions_bike_black_24dp.png",
+      "layoutProperties": {
+        "primaryColor": "#f97316",
+        "secondaryColor": "#0a0e17"
+      },
+      "homepageTrigger": {
+        "runFunction": "doGet",
+        "enabled": true
+      }
+    },
+    "sheets": {
+      "homepageTrigger": {
+        "runFunction": "doGet"
+      }
+    }
+  }
+}
